@@ -2,22 +2,24 @@ import mysql from "mysql2";
 
 export default class Database {
   constructor() {
-    this.connection = mysql.createConnection({
+    this.pool = mysql.createPool({
       host: "localhost",
-      port: 3306,
-      user: "root",
-      password: "",
-      database: "event-management",
+      user: "root", // Replace with your DB user
+      password: "", // Replace with your DB password
+      database: "event-management", // Replace with your DB name
+      waitForConnections: true,
+      connectionLimit: 0, // Maximum number of connections to allow in the pool
+      queueLimit: 0, // Unlimited connection queue (can be adjusted as needed)
     });
   }
 
   query(sql, bindings = []) {
     return new Promise((resolve, reject) => {
-      this.connection.execute(sql, bindings, function (err, rows) {
+      this.pool.execute(sql, bindings, function (err, res) {
         if (err) {
           reject(err);
         } else {
-          resolve(rows);
+          resolve(res);
         }
       });
     });
