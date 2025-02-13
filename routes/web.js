@@ -1,4 +1,4 @@
-import HomeController from "../app/controllers/homeController.js";
+import HomeController from "../app/controllers/HomeController.js";
 
 const route = (app) => {
   app.get("/", (req, res) => new HomeController().index(req, res));

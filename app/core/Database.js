@@ -1,12 +1,17 @@
 import mysql from "mysql2";
+import "dotenv/config"
+
+console.log(process.env.DB_HOST);
+
 
 export default class Database {
   constructor() {
     this.pool = mysql.createPool({
-      host: "localhost",
-      user: "root", // Replace with your DB user
-      password: "", // Replace with your DB password
-      database: "event-management", // Replace with your DB name
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER, // Replace with your DB user
+      password: process.env.DB_PASSWORD, // Replace with your DB password
+      database: process.env.DB, // Replace with your DB name
       waitForConnections: true,
       connectionLimit: 0, // Maximum number of connections to allow in the pool
       queueLimit: 0, // Unlimited connection queue (can be adjusted as needed)
